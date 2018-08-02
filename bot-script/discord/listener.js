@@ -1,3 +1,6 @@
+let path = require("path");
+let logger = require(path.join(__dirname,"../logger/logger.js"));
+let messageListener = require(path.join(__dirname,"../worker/message-listener.js"));
 class Listener
 {
     constructor(Bot)
@@ -13,4 +16,29 @@ class Listener
         Bot.on("warn",warningListener);//Discord warnings
     }
 }
+let startupListener = (param)=>{
+    logger.log("Bot logged in")
+};
+let reconnectionListener = (param)=>{
+    logger.log("Bot reconnecting : " + param)
+};
+let resumeListener =(param)=>{
+    logger.log("Bot resuming : " + param)
+};
+let debugListener =(param)=>{
+    logger.log("Bot debug : " + param)
+}
+let errorListener =(param)=>{
+    logger.log("Bot error : " + param)
+}
+let guildCreateListener =(param)=>{
+    logger.log("Bot joined guild : " + param)
+}
+let guildDeleteListener =(param)=>{
+    logger.log("Bot removed from guild : " + param)
+}
+let warningListener =(param)=>{
+    logger.log("Bot warning : " + param)
+}
+
 module.exports = Listener;

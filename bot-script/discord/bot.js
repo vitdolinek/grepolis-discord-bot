@@ -14,7 +14,7 @@ class Bot{
     }
     addListeners()
     {
-        new Listener(bot)
+        new Listener(this.bot)
     }
 };
 module.exports = Bot;
