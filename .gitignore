@@ -2,3 +2,4 @@ bot-script/node_modules
 bot-script/package-lock.json
 bot-script/logs
 bot-script/credentials/credentials.json 
+bot-script/cache/dump

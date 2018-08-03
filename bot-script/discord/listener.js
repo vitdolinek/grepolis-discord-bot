@@ -1,6 +1,7 @@
 let path = require("path");
 let logger = require(path.join(__dirname,"../logger/logger.js"));
 let messageListener = require(path.join(__dirname,"../worker/message-listener.js"));
+let core = require(path.join(__dirname,"../worker/helpers.js"));
 class Listener
 {
     constructor(Bot)
@@ -16,29 +17,45 @@ class Listener
         Bot.on("warn",warningListener);//Discord warnings
     }
 }
-let startupListener = (param)=>{
+let startupListener = (...params)=>{
     logger.log("Bot logged in")
+    //logger.log(params);//blank
 };
-let reconnectionListener = (param)=>{
-    logger.log("Bot reconnecting : " + param)
+let reconnectionListener = (...params)=>{
+    logger.log("Bot reconnecting : ");
+    logger.log(params);
 };
-let resumeListener =(param)=>{
-    logger.log("Bot resuming : " + param)
+let resumeListener =(...params)=>{
+    logger.log("Bot resuming : ");
+    logger.log(params);
 };
-let debugListener =(param)=>{
-    logger.log("Bot debug : " + param)
+let debugListener =(...params)=>{
+    logger.log("Bot debug : " + params );
+  //  logger.log(params);//prints heartbeat / websocket logs
 }
-let errorListener =(param)=>{
-    logger.log("Bot error : " + param)
+let errorListener =(...params)=>{
+    logger.log("Bot error : ")
+    logger.log(params);
 }
-let guildCreateListener =(param)=>{
-    logger.log("Bot joined guild : " + param)
+let guildCreateListener =(guild)=>{
+    logger.log("Bot joined guild : " + guild.id)
 }
-let guildDeleteListener =(param)=>{
-    logger.log("Bot removed from guild : " + param)
+let guildDeleteListener =(guild)=>{
+    logger.log("Bot removed from guild : " + guild.id);
+    core.removeActiveGuild(guild.id,(err)=>{
+        if(err)
+        {
+            logger.error(err)
+        }
+        else
+        {
+            logger.log("Active guild removed: " +  guild.name);
+        }
+    })
 }
-let warningListener =(param)=>{
-    logger.log("Bot warning : " + param)
+let warningListener =(...params)=>{
+    logger.log("Bot warning : " + params)
+    logger.log(params)
 }
 
 module.exports = Listener;
